@@ -12,7 +12,6 @@ const config = {
 
   // Base URL for GitHub Pages
   baseUrl: '/Ai-book/',
-
   // GitHub repo configuration
   organizationName: 'aftabahmed4',
   projectName: 'Ai-book',
