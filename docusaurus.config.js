@@ -8,12 +8,12 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // GitHub Pages production URL
-  url: 'https://aftabahmed4.github.io',
+  url: 'https://AftabAhmed4.github.io',
 
   // Base URL for GitHub Pages
   baseUrl: '/Ai-book/',
   // GitHub repo configuration
-  organizationName: 'aftabahmed4',
+  organizationName: 'AftabAhmed4',
   projectName: 'Ai-book',
 
   onBrokenLinks: 'warn', // Changed to 'warn' to allow build despite broken links
@@ -31,10 +31,10 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
 
-          // Disable edit URL temporarily
-          editUrl: undefined,
+          // Update edit URL to your actual repository
+          editUrl: 'https://github.com/AftabAhmed4/Ai-book/edit/main/',
 
-          // Docs will be hosted at /hackathon/docs/
+          // Docs will be hosted at /Ai-book/docs/
           routeBasePath: 'docs',
         },
         blog: false,
@@ -61,7 +61,7 @@ const config = {
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/aftab/hackathon',
+          href: 'https://github.com/AftabAhmed4/Ai-book',
           label: 'GitHub',
           position: 'right',
         },
@@ -74,25 +74,25 @@ const config = {
         {
           title: 'Textbook',
           items: [
-            { label: 'Introduction', to: '/hackathon/docs/intro' },
-            { label: 'Chapter 1: Foundations', to: '/hackathon/docs/textbook/chapter1/intro' },
-            { label: 'Glossary', to: '/hackathon/docs/glossary-template' }, // Corrected path
-            { label: 'References', to: '/hackathon/docs/references-template' } // Corrected path
+            { label: 'Introduction', to: '/Ai-book/docs/intro' },
+            { label: 'Chapter 1: Foundations', to: '/Ai-book/docs/textbook/chapter1/intro' },
+            { label: 'Glossary', to: '/Ai-book/docs/glossary-template' },
+            { label: 'References', to: '/Ai-book/docs/references-template' }
           ],
         },
         {
           title: 'Resources',
           items: [
-            { label: 'Content Generation Workflow', to: '/hackathon/docs/content-generation-workflow' },
-            { label: 'Module Template', to: '/hackathon/docs/textbook/template/module-template' },
-            { label: 'Book YAML Generator', to: '/hackathon/docs/book-yaml-generator' },
+            { label: 'Content Generation Workflow', to: '/Ai-book/docs/content-generation-workflow' },
+            { label: 'Module Template', to: '/Ai-book/docs/textbook/template/module-template' },
+            { label: 'Book YAML Generator', to: '/Ai-book/docs/book-yaml-generator' },
           ],
         },
         {
           title: 'More',
           items: [
-            { href: 'https://github.com/aftab/hackathon', label: 'GitHub' },
-            { href: 'https://github.com/aftab/hackathon/issues', label: 'Issues' },
+            { href: 'https://github.com/AftabAhmed4/Ai-book', label: 'GitHub' },
+            { href: 'https://github.com/AftabAhmed4/Ai-book/issues', label: 'Issues' },
           ],
         },
       ],
