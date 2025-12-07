@@ -1,0 +1,79 @@
+# Physical AI & Humanoid Robotics Textbook Configuration
+# This file defines the structure and metadata for the textbook
+# Following the principles from the project constitution
+
+title: "Physical AI & Humanoid Robotics"
+subtitle: "An AI-Native Textbook for Human-AI-Robot Collaboration"
+authors:
+  - "AI Assistant with Human Expert Review"
+version: "1.0.0"
+license: "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
+
+# Table of Contents Structure
+chapters:
+  - id: "intro"
+    title: "Introduction to Physical AI & Humanoid Robotics"
+    path: "./docs/intro.md"
+    modules:
+      - id: "intro-overview"
+        title: "Overview"
+        path: "./docs/intro.md"
+        
+  - id: "chapter1"
+    title: "Foundations of Physical AI"
+    path: "./docs/textbook/chapter1/"
+    modules:
+      - id: "ch1-intro"
+        title: "Introduction to Chapter 1"
+        path: "./docs/textbook/chapter1/intro.md"
+      - id: "ch1-theory"
+        title: "Theoretical Foundations"
+        path: "./docs/textbook/chapter1/theory.md"
+      - id: "ch1-practical"
+        title: "Practical Applications"
+        path: "./docs/textbook/chapter1/practical.md"
+      - id: "ch1-exercises"
+        title: "Exercises and Problems"
+        path: "./docs/textbook/chapter1/exercises.md"
+
+# Metadata for AI-Native Development
+ai_integration:
+  enabled: true
+  content_generation:
+    enabled: true
+    tools:
+      - "Claude Code"
+      - "Qwen Code"
+  review_process:
+    enabled: true
+    human_expert_required: true
+
+# Accessibility settings
+accessibility:
+  wcag_level: "AA"
+  alt_text_required: true
+  screen_reader_friendly: true
+
+# Multi-modal Learning Support
+multimodal:
+  diagrams:
+    enabled: true
+    auto_generation: true
+  code_examples:
+    enabled: true
+    languages:
+      - "Python"
+      - "C++"
+  exercises:
+    enabled: true
+    types:
+      - "practical"
+      - "theoretical"
+      - "simulation"
+
+# Technical Requirements
+technical_requirements:
+  docusaurus_compatible: true
+  static_generation: true
+  performance_target:
+    page_load_time: "< 3s"

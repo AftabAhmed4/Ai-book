@@ -1,0 +1,184 @@
+/**
+ * Custom CSS for Physical AI & Humanoid Robotics Textbook
+ * Accessibility settings and custom styling
+ */
+
+/* Ensure sufficient color contrast for WCAG AA compliance */
+:root {
+  --ifm-color-primary: #2563eb;
+  --ifm-color-primary-dark: #1d4ed8;
+  --ifm-color-primary-darker: #1a47c2;
+  --ifm-color-primary-darkest: #153a9e;
+  --ifm-color-primary-light: #3b82f6;
+  --ifm-color-primary-lighter: #60a5fa;
+  --ifm-color-primary-lightest: #93c5fd;
+}
+
+/* Accessibility enhancements */
+body {
+  font-family: var(--ifm-font-family-base);
+  /* Ensure minimum font size for readability */
+  font-size: 100%; /* 16px equivalent */
+}
+
+/* Focus indicators for keyboard navigation */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus,
+summary:focus {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Screen reader only content helper */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Heading accessibility */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--ifm-heading-font-weight);
+  line-height: var(--ifm-heading-line-height);
+}
+
+/* Code block accessibility */
+pre, code {
+  font-family: var(--ifm-font-family-monospace);
+  border-radius: var(--ifm-code-border-radius);
+}
+
+/* Ensure images have appropriate alt text */
+img {
+  border-radius: var(--ifm-global-radius);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Table accessibility */
+table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid var(--ifm-table-border-color);
+  padding: var(--ifm-table-cell-padding);
+  min-width: 120px;
+}
+
+/* Ensure form controls have sufficient size */
+input, select, textarea, button {
+  min-height: 40px;
+  min-width: 40px;
+}
+
+/* Better link distinction */
+a {
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Footer styling */
+.footer {
+  background-color: #1e293b; /* Dark blue-gray background */
+  color: white;
+  padding: 2rem 0;
+}
+
+.footer__title {
+  color: #f8fafc; /* Text light color */
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer__link-item {
+  color: #cbd5e1; /* Lighter blue-gray text */
+}
+
+.footer__link-item:hover {
+  color: #ffffff; /* White on hover */
+  text-decoration: underline;
+}
+
+.footer__copyright {
+  color: #94a3b8; /* Muted blue-gray color */
+  font-size: 0.875rem;
+  border-top: 1px solid #334155;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Hero section styling */
+.hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+  padding: 4rem 0;
+}
+
+.hero__title {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.button--secondary {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.button--secondary:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: white;
+}
+
+/* Reduce motion for users with vestibular disorders */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --ifm-color-emphasis-0: #000;
+    --ifm-color-emphasis-100: #1a1a1a;
+    --ifm-color-emphasis-200: #333;
+    --ifm-color-emphasis-300: #4d4d4d;
+    --ifm-color-emphasis-400: #666;
+    --ifm-color-emphasis-500: #808080;
+    --ifm-color-emphasis-600: #999;
+    --ifm-color-emphasis-700: #b3b3b3;
+    --ifm-color-emphasis-800: #ccc;
+    --ifm-color-emphasis-900: #e6e6e6;
+    --ifm-color-emphasis-1000: #fff;
+  }
+}

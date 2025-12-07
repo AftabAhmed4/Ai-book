@@ -1,55 +1,44 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- 
+Version change: N/A (Initial version) → 1.0.0
+List of modified principles: N/A (New project constitution)
+Added sections: All principles and sections are new for this project
+Removed sections: N/A
+Templates requiring updates: N/A (No changes needed to existing templates as this is a new project)
+Follow-up TODOs: None
+-->
+
+# Physical AI & Humanoid Robotics Textbook Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### AI-Native Content Development
+All content is developed using AI-assisted tools and workflows; Content must be generated iteratively with AI agents, reviewed by human experts, and continuously improved based on feedback and technological advances.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Modular Academic Structure
+Content must be organized in clearly defined, self-contained modules/chapters; Each module should be independently learnable, testable, and updatable; Clear learning objectives and prerequisites required for each module.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Technical Accuracy and Future-Focused
+All technical content must be verified for accuracy against current research and industry standards; Content should anticipate future developments in Physical AI and Humanoid Robotics; Forward-looking perspective required.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Practical Application Focus
+Every theoretical concept must have corresponding practical examples, labs, or exercises; Hands-on implementation and experimentation are essential components; Integration with real robotics and AI frameworks required.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Human-AI Collaboration Centric
+Content must emphasize collaboration between humans, AI, and robotic systems; Ethical considerations and human factors must be integrated throughout; Focus on preparing learners for human-AI-robot teaming scenarios.
 
-### [PRINCIPLE_6_NAME]
+### Multi-Modal Learning Support
+Content must include text, diagrams, code samples, videos, and interactive elements; Support for different learning styles and accessibility requirements; Auto-generated visual aids and interactive components required.
 
+## Technology Stack and Deployment
 
-[PRINCIPLE__DESCRIPTION]
+Built with Docusaurus for documentation; Deployed on GitHub Pages; Version-controlled with Git; AI generation tools: Claude Code/Qwen Code; Diagram generation with tools like Mermaid or Auto-generated images; Code examples in Python, C++, or other relevant languages.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Development Workflow
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Iterative drafting with AI assistance; Content reviewed by subject matter experts; Regular updates based on latest research; Continuous integration for documentation deployment; Peer review process for technical accuracy.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+All content must follow established academic standards; Technical accuracy verified by domain experts; Regular review cycles for currency of content; Compliance with accessibility standards required.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-07 | **Last Amended**: 2025-12-07
