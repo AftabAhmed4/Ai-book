@@ -12,7 +12,7 @@ Welcome to the comprehensive textbook on Physical AI and Humanoid Robotics. This
 
 This textbook is designed for:
 - Advanced undergraduate and graduate students in robotics, AI, or computer science
-- Researchers entering the field of physical AI 
+- Researchers entering the field of physical AI
 - Engineers working on robotic applications
 - Anyone interested in the intersection of AI and physical systems
 
@@ -29,23 +29,24 @@ This textbook is designed for:
 
 To begin your learning journey:
 
-1. Start with the [Introduction](./docs/intro.md) to understand the fundamentals
-2. Explore the core concepts in [Chapter 1: Foundations of Physical AI](./docs/textbook/chapter1/intro.md)
+1. Start with the [Introduction](/docs/intro) to understand the fundamentals
+2. Explore the core concepts in [Chapter 1: Foundations of Physical AI](/docs/textbook/chapter1/intro)
 3. Follow the structured learning path through each chapter
 4. Complete exercises and practical applications to reinforce concepts
 
 ### Chapters
 
-1. [Chapter 1: Foundations of Physical AI](./docs/textbook/chapter1/intro.md)
-   - Theoretical Foundations
-   - Practical Applications  
-   - Exercises and Problems
+1. [Chapter 1: Foundations of Physical AI](/docs/textbook/chapter1/intro)
+   - [Theoretical Foundations](/docs/textbook/chapter1/theory)
+   - [Practical Applications](/docs/textbook/chapter1/practical)
+   - [Exercises and Problems](/docs/textbook/chapter1/exercises)
 
 ### Resources
 
-- [Glossary](./docs/glossary.md) - Key terms and definitions
-- [References](./docs/references.md) - Academic sources and further reading
-- [Content Generation Workflow](./docs/content-generation-workflow.md) - How this textbook was created using AI tools
+- [Glossary](/docs/glossary-template) - Key terms and definitions
+- [References](/docs/references-template) - Academic sources and further reading
+- [Content Generation Workflow](/docs/content-generation-workflow) - How this textbook was created using AI tools
+- [Book YAML Generator](/docs/book-yaml-generator) - Tool for generating book specifications
 
 ### About this Project
 
