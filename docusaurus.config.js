@@ -13,14 +13,14 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://aftab.github.io',
+  url: 'https://aftabahmed4.github.io',
   // Set the /<base>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<org-name>/<repo-name>/'
-  baseUrl: '/hackathon/',
+  baseUrl: '/Ai-book/',
 
   // GitHub pages deployment config.
-  organizationName: 'aftab', // Usually your GitHub org/user name.
-  projectName: 'hackathon', // Usually your repo name.
+  organizationName: 'aftabahmed4', // Usually your GitHub org/user name.
+  projectName: 'Ai-book', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
