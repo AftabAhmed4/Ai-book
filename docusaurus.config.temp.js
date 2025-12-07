@@ -7,10 +7,10 @@ const config = {
   tagline: 'An AI-Native Textbook for Human-AI-Robot Collaboration',
   favicon: 'img/favicon.ico',
 
-  // GitHub Pages production URL
+  // GitHub Pages production URL - assuming root deployment for now
   url: 'https://AftabAhmed4.github.io',
-  // Base URL for GitHub Pages
-  baseUrl: '/Ai-book/',
+  // Temporary fix: Using root baseUrl to test if that solves the loading issue
+  baseUrl: '/',
   // GitHub Pages adds a trailing slash by default, so let's match that behavior
   trailingSlash: true,
 
@@ -36,7 +36,7 @@ const config = {
           // Update edit URL to your actual repository
           editUrl: 'https://github.com/AftabAhmed4/Ai-book/edit/main/',
 
-          // Docs will be hosted at /Ai-book/docs/
+          // Docs will be hosted at / (due to base URL change) 
           routeBasePath: 'docs',
         },
         blog: false,
