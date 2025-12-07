@@ -80,14 +80,14 @@ const config = {
             { label: 'References', to: '/Ai-book/docs/references' }
           ],
         },
-        {
-          title: 'Resources',
-          items: [
-            { label: 'Content Generation Workflow', to: '/Ai-book/docs/content-generation-workflow' },
-            { label: 'Module Template', to: '/Ai-book/docs/textbook/template/module-template' },
-            { label: 'Book YAML Generator', to: '/Ai-book/docs/book-yaml-generator' },
-          ],
-        },
+        // {
+        //   title: 'Resources',
+        //   items: [
+        //     { label: 'Content Generation Workflow', to: '/Ai-book/docs/content-generation-workflow' },
+        //     { label: 'Module Template', to: '/Ai-book/docs/textbook/template/module-template' },
+        //     { label: 'Book YAML Generator', to: '/Ai-book/docs/book-yaml-generator' },
+        //   ],
+        // },
         {
           title: 'More',
           items: [
