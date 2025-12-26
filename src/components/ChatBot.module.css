@@ -1,0 +1,28 @@
+/* Additional styles for the chatbot component */
+.chatContainer {
+  font-family: var(--ifm-font-family-base);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .chatContainer {
+    width: calc(100vw - 40px);
+    height: 50vh;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+/* Animation for smooth opening/closing */
+.chatContainer {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.chatFloatButton {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chatFloatButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}

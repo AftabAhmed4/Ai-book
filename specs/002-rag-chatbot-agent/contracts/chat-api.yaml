@@ -1,0 +1,248 @@
+openapi: 3.0.3
+info:
+  title: RAG Chatbot API
+  description: API for interacting with the RAG-based chatbot that answers questions about book content
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: https://api.textbook-chatbot.example.com
+    description: Production server
+
+paths:
+  /chat:
+    post:
+      summary: Submit a question about book content
+      description: Process a natural language question and return an AI-generated answer based on book content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+      responses:
+        '200':
+          description: Successful response with the AI-generated answer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+        '400':
+          description: Bad request - invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chat/session:
+    post:
+      summary: Create a new chat session
+      description: Start a new conversation session to maintain context for follow-up questions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+      responses:
+        '201':
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '400':
+          description: Bad request - invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /chat/session/{sessionId}:
+    get:
+      summary: Get session details
+      description: Retrieve information about a specific chat session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the session to retrieve
+      responses:
+        '200':
+          description: Session details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: End a chat session
+      description: Close and clean up resources for a specific chat session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the session to end
+      responses:
+        '200':
+          description: Session ended successfully
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The natural language question from the user
+          example: "What is the principle of least action in physics?"
+        sessionId:
+          type: string
+          description: Optional session ID to maintain conversation context
+          example: "session-abc123xyz"
+        context:
+          type: object
+          description: Additional context to influence the response
+          properties:
+            bookSection:
+              type: string
+              description: Specific book section to focus on
+              example: "chapter-3-section-2"
+
+    ChatResponse:
+      type: object
+      required:
+        - response
+        - sources
+        - confidence
+      properties:
+        response:
+          type: string
+          description: The AI-generated answer to the user's query
+          example: "The principle of least action states that..."
+        sources:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: ID of the source content chunk
+              title:
+                type: string
+                description: Title of the source section
+              content:
+                type: string
+                description: Snippet of the source content
+          description: List of book content chunks used to generate the response
+        confidence:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Confidence level of the response (0.0-1.0)
+          example: 0.85
+        sessionId:
+          type: string
+          description: Session ID for maintaining conversation context
+          example: "session-abc123xyz"
+
+    CreateSessionRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Optional user ID for authenticated users
+          example: "user-12345"
+
+    SessionResponse:
+      type: object
+      required:
+        - sessionId
+        - createdAt
+      properties:
+        sessionId:
+          type: string
+          description: Unique identifier for the chat session
+          example: "session-abc123xyz"
+        userId:
+          type: string
+          description: Associated user ID (if authenticated)
+          example: "user-12345"
+        context:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [query, response]
+              content:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+          description: Conversation history for context retention
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the session was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp of the last interaction
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Invalid request parameters"
+        details:
+          type: object
+          description: Additional error details (optional)
