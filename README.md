@@ -1,62 +1,182 @@
-# Physical AI & Humanoid Robotics Textbook
+# RAG-Based Chatbot for Educational Content
 
-An AI-Native Textbook for Human-AI-Robot Collaboration
-
-## About
-
-This is a comprehensive textbook on Physical AI and Humanoid Robotics, designed for advanced undergraduate and graduate students, researchers, and engineers working in robotics and AI.
-
-The textbook uses an AI-native approach to content development, combining AI-generated content with human expert review to ensure technical accuracy and pedagogical effectiveness.
+This project implements a Retrieval-Augmented Generation (RAG) chatbot that allows students to ask questions about textbook content and receive AI-generated answers based on the provided materials.
 
 ## Features
 
-- **AI-Native Content Development**: Content generated using AI tools with human expert review
-- **Modular Academic Structure**: Self-contained modules that can be studied independently
-- **Technical Accuracy**: Verified against current research and industry standards
-- **Practical Application Focus**: Each concept includes practical examples, labs, and exercises
-- **Human-AI Collaboration Centric**: Emphasizes collaboration between humans, AI, and robotic systems
-- **Multi-Modal Learning Support**: Includes text, diagrams, code samples, and interactive elements
+- Natural language querying of textbook content
+- Context-aware responses using vector similarity search
+- Support for both OpenAI and Google Gemini APIs
+- Session management to maintain conversation context
+- RESTful API for easy integration with other applications
 
-## Deployment
+## Prerequisites
 
-This site is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
+- Python 3.11+
+- Docker and Docker Compose (for Qdrant vector database)
+- API keys for OpenAI and Google Generative AI (for Gemini)
 
-### Manual Deployment
+## Setup
 
-If you need to deploy manually:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-**Using GitHub Actions (recommended):**
-1. Push your changes to the `main` branch
-2. The site will automatically be built and deployed via the GitHub Actions workflow
+2. Set up the Python virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r backend/requirements.txt
+   ```
 
-**Using Docusaurus CLI:**
-1. Ensure you have the correct GitHub organization and project name in `docusaurus.config.js`
-2. Run `npm run build` to build the static site
-3. Run `npx docusaurus deploy` to deploy to GitHub Pages
+3. Configure environment variables:
+   ```bash
+   cp backend/.env.example backend/.env
+   # Edit backend/.env with your API keys and configuration
+   ```
 
-**Using deployment script (Windows):**
-1. Run `.\deploy.ps1` from the project root
+4. Start the Qdrant vector database:
+   ```bash
+   docker-compose up -d qdrant
+   ```
 
-**Using deployment script (Unix/Linux):**
-1. Run `./deploy.sh` from the project root
+## Running the Application
 
-## Local Development
+### Development Mode
 
-1. Install dependencies: `npm install`
-2. Start local development server: `npm start`
-3. Open [http://localhost:3000](http://localhost:3000) in your browser
+```bash
+python start_server.py
+```
 
-## Contributing
+The API will be available at `http://localhost:8000`
 
-We welcome contributions to improve the textbook. Please follow these steps:
+### Using Uvicorn Directly
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add amazing feature'`)
-5. Push to the branch (`git push origin feature/amazing-feature`)
-6. Open a Pull Request
+```bash
+cd backend
+uvicorn src.api.main:app --reload --port 8000
+```
 
-## License
+## API Usage
 
-This textbook is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+### Chat Endpoint
+
+Send a question to the chatbot:
+
+```bash
+curl -X POST "http://localhost:8000/chat/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Explain quantum computing in simple terms"
+  }'
+```
+
+### Session-Based Chat
+
+Create a session for maintaining context:
+
+```bash
+curl -X POST "http://localhost:8000/chat/session" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": "user-123"
+  }'
+```
+
+Then use the returned session ID in chat requests:
+
+```bash
+curl -X POST "http://localhost:8000/chat/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What was the first concept you explained?",
+    "sessionId": "session-id-from-previous-request"
+  }'
+```
+
+## Architecture
+
+The application follows a service-oriented architecture:
+
+- **Models**: Pydantic models for data validation and serialization
+- **Services**: Business logic including RAG, vector storage, and AI providers
+- **API Routes**: FastAPI endpoints for handling requests
+- **Vector Store**: Qdrant for semantic search capabilities
+- **AI Providers**: Abstraction layer supporting both OpenAI and Google Gemini
+
+## Configuration
+
+The application can be configured via environment variables in the `.env` file:
+
+- `OPENAI_API_KEY`: Your OpenAI API key
+- `GOOGLE_API_KEY`: Your Google Generative AI API key
+- `QDRANT_URL`: URL for the Qdrant vector database
+- `AI_PROVIDER`: Either 'openai' or 'gemini'
+- `DEFAULT_EMBEDDING_MODEL`: Model for generating embeddings
+- `DEFAULT_LLM_MODEL`: Model for generating responses
+
+## Indexing Book Content
+
+To index book content for the chatbot to use:
+
+1. Create BookContent objects with your textbook content
+2. Use the RAGService to index the content:
+
+```python
+from backend.src.services.rag_service import RAGService
+from backend.src.models.book_content import BookContent
+
+rag_service = RAGService()
+
+# Create book content with proper structure
+book_content = BookContent.create_new(
+    title="Chapter 1: Introduction to AI",
+    content="Artificial Intelligence is a branch of computer science...",
+    source_reference="book1-chapter1"
+)
+
+# Index the content
+await rag_service.index_book_content(book_content)
+```
+
+## Testing
+
+Run the unit tests:
+
+```bash
+cd backend
+python -m pytest tests/unit/
+```
+
+## Docker Deployment
+
+To run the entire application using Docker:
+
+```bash
+docker-compose up --build
+```
+
+## Project Structure
+
+```
+backend/
+├── src/
+│   ├── models/          # Data models
+│   ├── services/        # Business logic
+│   └── api/
+│       ├── main.py      # FastAPI application
+│       └── routes/      # API endpoints
+├── tests/              # Unit and integration tests
+├── requirements.txt    # Python dependencies
+└── config.py           # Configuration settings
+```
+
+## Next Steps
+
+- Implement more sophisticated content indexing
+- Add support for multiple textbooks
+- Enhance the frontend integration for textbook interfaces
+- Implement analytics and usage tracking
+- Add more comprehensive error handling and fallback mechanisms
