@@ -32,12 +32,10 @@ allowed_origins = [
 ]
 
 
+# Use the variable instead of repeating
 app.add_middleware(
     CORSMiddleware,
-    allowed_origins = [
-        "http://localhost:3000/",
-        "https://aftabahmed4.github.io",
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

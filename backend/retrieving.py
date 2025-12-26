@@ -37,4 +37,4 @@ def retrieve(query):
     return [point.payload["text"] for point in result.points]
 
 
-print(retrieve("Summary this book"))
+# print(retrieve("Summary this book"))
