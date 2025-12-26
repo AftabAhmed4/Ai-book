@@ -47,7 +47,7 @@ const ChatBot = () => {
 
     try {
       // Call the backend API with timeout
-      const response = await fetchWithTimeout('http://127.0.0.1:8000/chat', {
+      const response = await fetchWithTimeout('https://ai-book-nine-navy.vercel.app/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const ChatBot = () => {
       if (error.name === 'AbortError') {
         errorMessage = 'Request timed out. The server might be taking too long to respond.';
       } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
-        errorMessage = 'Unable to connect to the AI backend. Please ensure the backend server is running at http://127.0.0.1:8000.';
+        errorMessage = 'Unable to connect to the AI backend. Please ensure the backend server is running at https://ai-book-nine-navy.vercel.app.';
       }
 
       const errorBotMessage = {

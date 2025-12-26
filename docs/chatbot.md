@@ -41,7 +41,7 @@ To use the chatbot, you need to run the backend server:
    python -m uvicorn main:app --reload --port 8000
    ```
 
-5. The chatbot will now be able to connect to the backend at `http://127.0.0.1:8000/chat`
+5. The chatbot will now be able to connect to the backend at `https://ai-book-nine-navy.vercel.app/chat`
 
 ## Troubleshooting
 

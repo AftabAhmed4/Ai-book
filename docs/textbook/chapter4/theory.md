@@ -1,176 +1,119 @@
-
 ### A* Algorithm
 
-A* is a heuristic extension of Dijkstra's algorithm:
+A* is a heuristic extension of Dijkstra's algorithm. It uses the evaluation function `f(n) = g(n) + h(n)`, where:
 
-$$ f(n) = g(n) + h(n) $$
+- `g(n)` is the known cost from the start node to node `n`
+- `h(n)` is the heuristic estimated cost from node `n` to the goal
+- `f(n)` is the estimated total cost of the path through node `n`
 
-Where:
-- \(g(n)\) is the cost from start to node \(n\)
-- \(h(n)\) is the heuristic estimate from \(n\) to goal
-- \(f(n)\) is the estimated total cost of the path through \(n\)
-
-A* is optimal if \(h(n)\) is admissible (never overestimates the actual cost).
+A* is optimal if the heuristic `h(n)` is admissible, meaning it never overestimates the true cost to the goal.
 
 ## 4.5 Optimization-Based Motion Planning
 
 ### Optimal Control Formulation
 
-The motion planning problem can be formulated as an optimal control problem:
+The motion planning problem can be formulated as an optimal control problem: minimize the integral of a cost function `L(x(t), u(t), t)` from `t = 0` to `T`, subject to the system dynamics `dx/dt = f(x(t), u(t), t)`, initial condition `x(0) = x_start`, terminal condition `x(T) = x_goal`, and inequality constraints `g(x(t), u(t)) <= 0`.
 
-$$
-\min \int_0^T L(x(t), u(t), t) \, dt
-$$
-subject to
-$$
-\dot{x}(t) = f(x(t), u(t), t), \quad
-x(0) = x_\text{start}, \quad
-x(T) = x_\text{goal}, \quad
-g(x(t), u(t)) \leq 0
-$$
-
-Where:
-- \(L\) is the Lagrangian (cost function)
-- \(f\) defines the system dynamics
-- \(g\) represents constraints
+Here:
+- `L` is the Lagrangian (running cost)
+- `f` defines the system dynamics
+- `g` represents path and control constraints
 
 ### Trajectory Optimization
 
-Discretize the continuous problem and solve the resulting nonlinear program:
-
-$$
-\min \sum L(x_k, u_k)
-$$
-subject to
-$$
-x_{k+1} = f(x_k, u_k), \quad
-x_0 = x_\text{start}, \quad
-x_N = x_\text{goal}, \quad
-g(x_k, u_k) \leq 0
-$$
+The continuous optimal control problem is discretized and solved as a nonlinear programming problem: minimize the sum of stage costs `L(x_k, u_k)` subject to discrete dynamics `x_{k+1} = f(x_k, u_k)`, initial state `x_0 = x_start`, final state `x_N = x_goal`, and constraints `g(x_k, u_k) <= 0`.
 
 ## 4.6 Navigation Functions
 
 ### Artificial Potential Fields
 
-Define attractive and repulsive potential fields:
+Artificial potential fields combine an attractive potential pulling the robot toward the goal and a repulsive potential pushing it away from obstacles.
 
+The total potential is `U_total = U_attr + U_rep`.
 
-Where \(\rho(q)\) is the distance to the nearest obstacle.
+The attractive potential is typically quadratic in the distance to the goal, while the repulsive potential is inversely related to the distance to the nearest obstacle and active only within a certain range.
 
-The control is then: \( u = -\nabla (U_\text{attr} + U_\text{rep}) \)
+The control input is the negative gradient of the total potential: `u = -grad(U_attr + U_rep)`.
 
 ### Navigation Functions on Manifolds
 
-For configuration spaces that are smooth manifolds, navigation functions \(\phi\) are smooth, polar functions that satisfy:
-1. \(\phi\) has a unique minimum at the goal
-2. \(\phi\) has no local minima other than the goal
-3. \(\phi\) approaches infinity near obstacles
+For smooth configuration space manifolds, navigation functions `phi` are designed to be smooth and polar with:
+1. a unique minimum at the goal configuration
+2. no local minima other than the goal
+3. values approaching infinity near obstacles
+
+Following the negative gradient of such a function guarantees convergence to the goal without getting trapped in local minima.
 
 ## 4.7 Control Theory for Navigation
 
 ### Feedback Linearization
 
-Transform the nonlinear robot dynamics into a linear system for control design:
+Feedback linearization transforms nonlinear robot dynamics into an equivalent linear system by canceling nonlinear terms with a suitable control input.
 
-$$ \tau = M(q)\ddot{x}_\text{des} + C(q, \dot{q})\dot{q} + g(q) + M(q)K_v(\dot{q}_\text{des} - \dot{q}) + M(q)K_p(q_\text{des} - q) $$
+The resulting torque command is of the form:
+`tau = M(q) * x_ddot_des + C(q, q_dot) * q_dot + g(q) + feedback_terms`
 
-Where \(K_p\) and \(K_v\) are positive definite gain matrices.
+Here `K_p` and `K_v` are positive definite gain matrices that shape the closed-loop error dynamics.
 
 ### Lyapunov-Based Control
 
-Design a control law that ensures the Lyapunov function \(V\) decreases along system trajectories:
+Lyapunov-based methods design control laws that make a positive definite Lyapunov function `V` decrease along system trajectories.
 
-$$
-V(e) = \frac{1}{2} e^\top e \quad \text{where} \quad e = q - q_\text{des}
-$$
-$$
-\dot{V}(e) = e^\top \dot{e} = e^\top (\dot{q} - \dot{q}_\text{des}) < 0
-$$
+A common choice is `V(e) = 0.5 * e^T * e`, where `e = q - q_des` is the configuration error. The control is designed such that `dV/dt = e^T * de/dt < 0`, ensuring asymptotic stability.
 
 ## 4.8 Uncertainty and Stochastic Planning
 
 ### Stochastic Motion Planning
 
-When uncertainty is present, plan in the belief space \(\mathcal{B}\):
-
-$$
-\min \mathbb{E}\left[ \int_0^T L(x(t), u(t), t) \, dt \right]
-$$
-subject to
-$$
-dx = f(x, u, w) \, dt + g(x, u) \, dW
-$$
-
-Where \(w\) is process noise and \(W\) is a Wiener process.
+In the presence of uncertainty, planning occurs in belief space. The objective is to minimize the expected cost subject to stochastic differential equations of the form:
+`dx = f(x, u, w) dt + g(x, u) dW`
+where `w` is process noise and `W` is a Wiener process.
 
 ### Partially Observable Markov Decision Processes (POMDPs)
 
-For partially observable environments:
-
-$$ \pi^* = \arg\max_\pi \mathbb{E}\left[ \sum \gamma^t R(s_t, a_t) \mid \pi, b_0 \right] $$
-
-Where \(b_t\) is the belief state and \(\gamma\) is the discount factor.
+For partially observable environments, the problem is modeled as a POMDP. The optimal policy `pi*` maximizes the expected discounted reward starting from initial belief `b_0`, accounting for partial observability through belief state updates.
 
 ## 4.9 Dynamic Environment Planning
 
 ### Velocity Obstacles
 
-The velocity obstacle for a moving obstacle is defined as:
-
-$$ \text{VO}_{i,j} = \{ v \mid (v - v_j) \cdot \hat{n} + r_j \geq 0 \} $$
-
-Where \(v_j\) is the obstacle velocity, \(\hat{n}\) is the normal to the collision surface, and \(r_j\) is the "collision cone" parameter.
+The velocity obstacle `VO_{i,j}` for a moving obstacle is the set of robot velocities `v` that will lead to collision, assuming constant obstacle velocity `v_j`. Selecting a control velocity outside all velocity obstacles ensures collision avoidance.
 
 ### Nonlinear Model Predictive Control (NMPC)
 
-Solve an optimization problem at each time step over a prediction horizon:
-
-$$
-\min \sum L(x_k, u_k) + \Phi(x_N)
-$$
-subject to
-$$
-x_{k+1} = f(x_k, u_k), \quad
-x_0 = \text{current_state}, \quad
-x_k \in \mathcal{X}_\text{free}, \quad u_k \in \mathcal{U}
-$$
+NMPC solves a finite-horizon optimal control problem at each time step, minimizing a cost over predicted states and controls subject to dynamics and constraints. The first control input is applied, and the process repeats at the next step with updated state measurements.
 
 ## 4.10 Multi-Robot Coordination
 
 ### Priority-Based Planning
 
-Assign priorities to robots and plan sequentially:
-$$ \tau_i = \arg\min_\tau c(\tau_i) $$
-subject to:
-- \(\tau_i\) is collision-free with obstacles
-- \(\tau_i\) is collision-free with already planned \(\tau_j\) (\(j < i\))
+Robots are assigned priorities and plan sequentially. Higher-priority robots plan ignoring lower-priority ones, while lower-priority robots treat higher-priority trajectories as dynamic obstacles.
 
 ### Conflict-Based Search (CBS)
 
-A two-level approach:
-- High level: Resolve conflicts between robot trajectories
-- Low level: Plan individual robot paths using A* or similar
+CBS is a two-level algorithm:
+- High level: searches over conflict avoidance constraints between robot trajectories
+- Low level: plans individual collision-free paths using single-agent planners like A*
 
 ## 4.11 Computational Complexity
 
 ### Complexity Analysis
 
-- **Grid-based methods**: \(O(n^2)\) or \(O(n^3)\) for 2D/3D grids
-- **Sampling-based methods**: Probabilistic completeness, practical performance
-- **Exact cell decomposition**: \(O(2^n)\) in general, polynomial for special cases
-- **Visibility graphs**: \(O(n^2 \log n)\) for the shortest path in 2D
+- Grid-based methods: `O(n^2)` in 2D, `O(n^3)` in 3D
+- Sampling-based methods: offer probabilistic completeness with good practical performance
+- Exact cell decomposition: exponential in configuration space dimension in general
+- Visibility graphs: `O(n^2 log n)` for shortest paths in 2D polygonal environments
 
 ## 4.12 Convergence and Optimality
 
 ### Asymptotic Optimality
 
-Algorithms like RRT* are asymptotically optimal, meaning as the number of samples approaches infinity, the solution cost approaches the optimal cost.
+Algorithms like RRT* are asymptotically optimal: as the number of samples goes to infinity, the cost of the returned solution converges in probability to the optimal cost.
 
 ### Rate of Convergence
 
-The rate at which a probabilistically complete algorithm finds a solution (if one exists) as more samples are added to the search.
+This refers to how quickly probabilistically complete planners find a feasible solution (if one exists) as the number of samples increases.
 
 ## Conclusion
 
-The theoretical foundations of motion planning provide the mathematical tools needed to develop robust navigation systems for humanoid robots. Understanding these concepts is essential for designing algorithms that can generate safe, efficient, and dynamically feasible paths in complex environments. The mathematical frameworks presented here form the basis for advanced planning approaches used in current humanoid robotics systems.
+The theoretical foundations of motion planning provide the mathematical tools needed to develop robust navigation systems for humanoid robots. Understanding these concepts is essential for designing algorithms that can generate safe, efficient, and dynamically feasible paths in complex environments. The frameworks presented here form the basis for advanced planning approaches used in current humanoid robotics systems.
