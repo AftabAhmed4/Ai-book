@@ -28,18 +28,15 @@ app = FastAPI(title="RAG ChatBot")
 
 allowed_origins = [
     "http://localhost:3000/",
-    "https://muhammadtayyab8.github.io/physical-ai-textbook/",
-    "http://192.168.43.129:3000"
+    "https://aftabahmed4.github.io",
 ]
 
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://muhammadtayyab8.github.io",
-        "https://muhammadtayyab8.github.io/physical-ai-textbook",
+    allowed_origins = [
+        "http://localhost:3000/",
+        "https://aftabahmed4.github.io",
     ],
     allow_credentials=True,
     allow_methods=["*"],
